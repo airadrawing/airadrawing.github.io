@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>AD - Aira Drawing | no drama. just learning.</title>
+  <!-- Font Awesome 6 (gratis) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #fef7e8;
+      font-family: 'Inter', sans-serif;
+      color: #2c2b28;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    /* Header */
+    .header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #ffe0b5;
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-dummy {
+      width: 55px;
+      height: 55px;
+      background: #c76b4a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #fef7e8;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #c76b4a;
+    }
+    .tagline {
+      font-size: 0.7rem;
+      color: #b28b66;
+      letter-spacing: 1px;
+    }
+    /* Language dropdown dengan bendera */
+    .lang-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .lang-button {
+      background: transparent;
+      border: 1px solid #c76b4a;
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lang-button i {
+      font-size: 1.2rem;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 120px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      z-index: 1;
+      overflow: hidden;
+      border: 1px solid #f5e4d2;
+    }
+    .dropdown-content a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      text-decoration: none;
+      color: #2c2b28;
+      transition: 0.2s;
+    }
+    .dropdown-content a:hover {
+      background-color: #fef2e8;
+    }
+    .lang-dropdown:hover .dropdown-content {
+      display: block;
+    }
+    /* Why section - keunggulan produk (modern card grid) */
+    .features-section {
+      margin: 3rem 0 2rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 32px;
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      transition: 0.3s;
+      border: 1px solid #f5e6d8;
+      box-shadow: 0 12px 24px -12px rgba(0,0,0,0.08);
+    }
+    .feature-card i {
+      font-size: 2.5rem;
+      color: #e8b86b;
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      font-size: 0.85rem;
+      color: #5d5a54;
+    }
+    /* Products grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+      border: 1px solid #f5e6d8;
+      transition: 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-img {
+      background: #f4ede5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      padding: 1rem 0;
+      aspect-ratio: 1 / 0.8;
+    }
+    .product-info {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+    .product-price {
+      font-weight: 600;
+      color: #c76b4a;
+      margin: 0.5rem 0;
+    }
+    .btn-buy {
+      background: #c76b4a;
+      border: none;
+      width: 100%;
+      padding: 8px 0;
+      border-radius: 40px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: auto;
+      transition: 0.2s;
+    }
+    .btn-buy:hover { background: #b25c3e; }
+    .load-more-container {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .load-more-btn {
+      background: transparent;
+      border: 2px solid #c76b4a;
+      padding: 10px 32px;
+      border-radius: 60px;
+      color: #c76b4a;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #ffe0b5;
+      border-top: 3px solid #c76b4a;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Reviews slider */
+    .reviews-slider {
+      overflow-x: auto;
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem 0.5rem 2rem;
+      scroll-snap-type: x mandatory;
+    }
+    .review-card {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      background: white;
+      border-radius: 28px;
+      padding: 1.2rem;
+      border: 1px solid #f5e4d2;
+    }
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      background: #dbc9b5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .stars i { color: #f4b942; font-size: 0.8rem; }
+    /* PayPal support */
+    .support-section {
+      text-align: center;
+      margin: 3rem 0 1rem;
+    }
+    .paypal-btn {
+      background: #ffc439;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 1rem;
+      color: #1e1e1e;
+    }
+    .paypal-btn:hover {
+      background: #f0b72a;
+      transform: scale(1.02);
+    }
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: #fff5ea;
+      border-radius: 48px 48px 0 0;
+      color: #9a8b76;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 992px) {
+      .products-grid { grid-template-columns: repeat(3,1fr); }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .products-grid { grid-template-columns: repeat(2,1fr); gap: 1rem; }
+      .logo-dummy { width: 45px; height: 45px; font-size: 1.2rem; }
+      .site-title { font-size: 1.3rem; }
+      .features-grid { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header-flex">
+    <div class="logo-area">
+      <div class="logo-dummy">AD</div>
+      <div>
+        <div class="site-title">AD - Aira Drawing</div>
+        <div class="tagline">no drama. just learning.</div>
+      </div>
+    </div>
+    <div class="lang-dropdown">
+      <button class="lang-button" id="currentLangBtn">
+        <i class="fas fa-flag-usa" id="currentFlag"></i> <span id="currentLangText">English</span> <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="#" data-lang="en" data-flag="usa" data-text="English"><i class="fas fa-flag-usa"></i> English</a>
+        <a href="#" data-lang="id" data-flag="id" data-text="Indonesia"><i class="fas fa-flag-id"></i> Indonesia</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keunggulan produk (4 card modern) -->
+  <div class="features-section">
+    <div class="section-title">✨ <span data-i18n="why_title">Why AD Aira Drawing?</span> ✨</div>
+    <div class="features-grid">
+      <div class="feature-card"><i class="fas fa-image"></i><h3 data-i18n="feat1_title">High Quality Graphics</h3><p data-i18n="feat1_desc">Gambar tajam, tidak pecah saat dicetak ukuran besar.</p></div>
+      <div class="feature-card"><i class="fas fa-child"></i><h3 data-i18n="feat2_title">No Drama Learning</h3><p data-i18n="feat2_desc">Desain ramah anak, bikin belajar nggak terasa terbebani.</p></div>
+      <div class="feature-card"><i class="fas fa-language"></i><h3 data-i18n="feat3_title">Full English</h3><p data-i18n="feat3_desc">Standar edukasi internasional untuk masa depan cemerlang.</p></div>
+      <div class="feature-card"><i class="fas fa-bolt"></i><h3 data-i18n="feat4_title">Instant Delivery</h3><p data-i18n="feat4_desc">Bayar sekarang, langsung download filenya detik itu juga!</p></div>
+    </div>
+  </div>
+
+  <div class="section-title"><i class="fas fa-cube"></i> <span data-i18n="bundles_title"></span></div>
+  <div id="productsContainer" class="products-grid"></div>
+  <div class="load-more-container">
+    <button id="loadMoreBtn" class="load-more-btn"><span data-i18n="load_more"></span> <i class="fas fa-arrow-down"></i></button>
+  </div>
+
+  <div class="section-title"><i class="fas fa-star"></i> <span data-i18n="testimonials"></span></div>
+  <div class="reviews-slider" id="reviewsSlider"></div>
+
+  <div class="support-section">
+    <button id="paypalSupportBtn" class="paypal-btn"><i class="fab fa-paypal"></i> <span data-i18n="support_us">Support us via PayPal</span></button>
+  </div>
+
+  <div class="footer">
+    <i class="fas fa-globe"></i> airadrawing.blogspot.com — <span data-i18n="footer"></span><br>
+    &copy; 2025 Aira Drawing.
+  </div>
+</div>
+
+<script>
+// ======================== DATA PRODUK (19 BUNDLE) ========================
+const allProducts = [
+  { id:1, name_en:"Bundle #1 Alphabet & Numbers", name_id:"Bundle #1 Alfabet & Angka", price:"$14.90", icon:"🔤" },
+  { id:2, name_en:"Bundle #2 Shapes, Colors & School", name_id:"Bundle #2 Bentuk, Warna & Sekolah", price:"$14.90", icon:"🎨" },
+  { id:3, name_en:"Bundle #3 My Body & Health", name_id:"Bundle #3 Tubuh & Kesehatan", price:"$14.90", icon:"🧠" },
+  { id:4, name_en:"Bundle #4 Emotions & Feelings", name_id:"Bundle #4 Emosi & Perasaan", price:"$14.90", icon:"😊" },
+  { id:5, name_en:"Bundle #5 Good Character", name_id:"Bundle #5 Karakter Baik", price:"$14.90", icon:"🌟" },
+  { id:6, name_en:"Bundle #6 Farm Animals & Products", name_id:"Bundle #6 Hewan Ternak & Produk", price:"$14.90", icon:"🐄" },
+  { id:7, name_en:"Bundle #7 Wild Animals & Habitats", name_id:"Bundle #7 Hewan Liar & Habitat", price:"$14.90", icon:"🦁" },
+  { id:8, name_en:"Bundle #8 Nature & Ecosystems", name_id:"Bundle #8 Alam & Ekosistem", price:"$14.90", icon:"🌿" },
+  { id:9, name_en:"Bundle #9 Food & Nutrition", name_id:"Bundle #9 Makanan & Gizi", price:"$14.90", icon:"🥗" },
+  { id:10, name_en:"Bundle #10 Jobs & Professions", name_id:"Bundle #10 Pekerjaan & Profesi", price:"$14.90", icon:"👩‍⚕️" },
+  { id:11, name_en:"Bundle #11 Transportation", name_id:"Bundle #11 Transportasi", price:"$14.90", icon:"🚗" },
+  { id:12, name_en:"Bundle #12 Space & Beyond", name_id:"Bundle #12 Luar Angkasa", price:"$14.90", icon:"🚀" },
+  { id:13, name_en:"Bundle #13 Paper Crafts", name_id:"Bundle #13 Kerajinan Kertas", price:"$12.90", icon:"✂️" },
+  { id:14, name_en:"Bundle #14 Insects & Bugs", name_id:"Bundle #14 Serangga", price:"$14.90", icon:"🐞" },
+  { id:15, name_en:"Bundle #15 Around the World", name_id:"Bundle #15 Keliling Dunia", price:"$16.90", icon:"🌍" },
+  { id:16, name_en:"Bundle #16 Music & Instruments", name_id:"Bundle #16 Musik & Alat", price:"$14.90", icon:"🎵" },
+  { id:17, name_en:"Bundle #17 Sports & Moves", name_id:"Bundle #17 Olahraga & Gerak", price:"$14.90", icon:"⚽" },
+  { id:18, name_en:"Bundle #18 Mythology & Magic", name_id:"Bundle #18 Mitologi & Sihir", price:"$15.90", icon:"🦄" },
+  { id:19, name_en:"Bundle #19 Daily Routines", name_id:"Bundle #19 Rutinitas Harian", price:"$12.90", icon:"⏰" }
+];
+
+// ======================== REVIEWS (7) ========================
+const reviewsData = [
+  { avatar:"🌷", name_en:"Ayu Budianti", name_id:"Ayu Budianti", stars:5, text_en:"Beautiful posters, my child loves learning letters.", text_id:"Posternya cantik, anak saya suka belajar huruf." },
+  { avatar:"👩‍👧", name_en:"Dewi Safitri", name_id:"Dewi Safitri", stars:5, text_en:"Complete bundle, great illustrations.", text_id:"Bundle lengkap, ilustrasi bagus." },
+  { avatar:"📚", name_en:"Rina Hartono", name_id:"Rina Hartono", stars:5, text_en:"Hand-drawn style, different from others.", text_id:"Gaya hand-drawn, beda dari yang lain." },
+  { avatar:"🧸", name_en:"Melisa Anggraini", name_id:"Melisa Anggraini", stars:4, text_en:"Good quality, my child likes it.", text_id:"Kualitas bagus, anak saya suka." },
+  { avatar:"👨‍👦", name_en:"Fajar Setiawan", name_id:"Fajar Setiawan", stars:5, text_en:"Worth it, can print many times.", text_id:"Seharga, bisa print berkali-kali." },
+  { avatar:"✨", name_en:"Sinta Paramitha", name_id:"Sinta Paramitha", stars:5, text_en:"LOVE IT! Aesthetic design.", text_id:"SUKA BANGET! Desain estetik." },
+  { avatar:"🖍️", name_en:"Lia Kusuma", name_id:"Lia Kusuma", stars:5, text_en:"Perfect for easily bored kids.", text_id:"Cocok untuk anak yang mudah bosan." }
+];
+
+// ======================== BAHASA ========================
+const i18n = {
+  en: {
+    why_title: "Why AD Aira Drawing?",
+    feat1_title: "High Quality Graphics", feat1_desc: "Sharp images, no pixelation when printed large.",
+    feat2_title: "No Drama Learning", feat2_desc: "Kid-friendly design, learning feels easy and fun.",
+    feat3_title: "Full English", feat3_desc: "International education standard for a bright future.",
+    feat4_title: "Instant Delivery", feat4_desc: "Pay now, download the file instantly!",
+    bundles_title: "Edu Bundles",
+    testimonials: "Testimonials",
+    load_more: "Show more",
+    footer: "Original hand-crayon designs.",
+    support_us: "Support us via PayPal"
+  },
+  id: {
+    why_title: "Kenapa AD Aira Drawing?",
+    feat1_title: "High Quality Graphics", feat1_desc: "Gambar tajam, tidak pecah saat dicetak ukuran besar.",
+    feat2_title: "No Drama Learning", feat2_desc: "Desain ramah anak, bikin belajar nggak terasa terbebani.",
+    feat3_title: "Full English", feat3_desc: "Standar edukasi internasional untuk masa depan cemerlang.",
+    feat4_title: "Instant Delivery", feat4_desc: "Bayar sekarang, langsung download filenya detik itu juga!",
+    bundles_title: "Paket Edukasi",
+    testimonials: "Testimoni",
+    load_more: "Tampilkan lebih banyak",
+    footer: "Desain asli hand-crayon.",
+    support_us: "Dukung kami via PayPal"
+  }
+};
+
+let currentLang = "en";
+let currentIndex = 0;
+const itemsPerLoad = 8;
+let isLoading = false;
+const container = document.getElementById("productsContainer");
+const loadBtn = document.getElementById("loadMoreBtn");
+const sliderContainer = document.getElementById("reviewsSlider");
+
+function renderProducts(productsToRender, lang) {
+  for (let p of productsToRender) {
+    const name = lang === "en" ? p.name_en : p.name_id;
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.innerHTML = `
+      <div class="product-img"><span style="font-size:2.8rem;">${p.icon}</span></div>
+      <div class="product-info">
+        <div class="product-title">${name}</div>
+        <div class="product-price">${p.price}</div>
+        <button class="btn-buy" data-name="${name.replace(/&/g, "&amp;")}"><i class="fas fa-cart-shopping"></i> ${lang === "en" ? "Buy" : "Beli"}</button>
+      </div>
+    `;
+    container.appendChild(card);
+  }
+  document.querySelectorAll(".btn-buy").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      alert(currentLang === "en" ? `Thank you! Product "${btn.dataset.name}" will be available soon. Visit airadrawing.blogspot.com` : `Terima kasih! Produk "${btn.dataset.name}" akan segera tersedia. Kunjungi airadrawing.blogspot.com`);
+    });
+  });
+}
+
+function loadNextBatch() {
+  if (isLoading) return;
+  if (currentIndex >= allProducts.length) {
+    loadBtn.style.display = "none";
+    return;
+  }
+  isLoading = true;
+  const originalHtml = loadBtn.innerHTML;
+  loadBtn.innerHTML = (currentLang === "en" ? "Loading" : "Memuat") + ' <span class="spinner"></span>';
+  loadBtn.disabled = true;
+  setTimeout(() => {
+    const next = allProducts.slice(currentIndex, currentIndex + itemsPerLoad);
+    renderProducts(next, currentLang);
+    currentIndex += itemsPerLoad;
+    loadBtn.innerHTML = originalHtml;
+    loadBtn.disabled = false;
+    isLoading = false;
+    if (currentIndex >= allProducts.length) loadBtn.style.display = "none";
+  }, 300);
+}
+
+function resetProducts() {
+  container.innerHTML = "";
+  currentIndex = 0;
+  loadBtn.style.display = "inline-block";
+  loadNextBatch();
+}
+
+function renderReviews(lang) {
+  sliderContainer.innerHTML = "";
+  for (let rev of reviewsData) {
+    const name = lang === "en" ? rev.name_en : rev.name_id;
+    const text = lang === "en" ? rev.text_en : rev.text_id;
+    let stars = "";
+    for (let s=0; s<rev.stars; s++) stars += '<i class="fas fa-star"></i>';
+    for (let s=rev.stars; s<5; s++) stars += '<i class="far fa-star"></i>';
+    const card = document.createElement("div");
+    card.className = "review-card";
+    card.innerHTML = `
+      <div class="review-header"><div class="avatar">${rev.avatar}</div><div><div class="reviewer-name">${name}</div><div class="stars">${stars}</div></div></div>
+      <div class="review-text">"${text}"</div>
+    `;
+    sliderContainer.appendChild(card);
+  }
+}
+
+function updateLanguageUI(lang) {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (i18n[lang][key]) el.innerText = i18n[lang][key];
+  });
+  const loadMoreSpan = loadBtn.querySelector("span");
+  if (loadMoreSpan) loadMoreSpan.innerText = i18n[lang].load_more;
+  // update flag and text on dropdown button
+  const flagElem = document.getElementById("currentFlag");
+  const textElem = document.getElementById("currentLangText");
+  if (lang === "en") {
+    flagElem.className = "fas fa-flag-usa";
+    textElem.innerText = "English";
+  } else {
+    flagElem.className = "fas fa-flag-id";
+    textElem.innerText = "Indonesia";
+  }
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  updateLanguageUI(lang);
+  resetProducts();
+  renderReviews(lang);
+}
+
+// Deteksi IP otomatis
+function detectLanguageByIP() {
+  fetch("https://ipapi.co/json/")
+    .then(res => res.json())
+    .then(data => {
+      const country = data.country_code;
+      let detected = country === "ID" ? "id" : "en";
+      setLanguage(detected);
+    })
+    .catch(() => {
+      const browserLang = navigator.language;
+      let fallback = browserLang.startsWith("id") ? "id" : "en";
+      setLanguage(fallback);
+    });
+}
+
+// Event listeners untuk dropdown
+document.querySelectorAll(".dropdown-content a").forEach(link => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const lang = link.getAttribute("data-lang");
+    setLanguage(lang);
+  });
+});
+
+// Support PayPal button
+document.getElementById("paypalSupportBtn").addEventListener("click", () => {
+  // Ganti dengan link PayPal lo nanti
+  window.open("https://www.paypal.com/donate?hosted_button_id=YOUR_ID", "_blank");
+  alert(currentLang === "en" ? "Redirecting to PayPal. Thank you for your support!" : "Mengarahkan ke PayPal. Terima kasih dukungannya!");
+});
+
+loadBtn.addEventListener("click", loadNextBatch);
+detectLanguageByIP();
+</script>
+</body>
+</html>
