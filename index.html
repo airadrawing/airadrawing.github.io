@@ -343,8 +343,8 @@
         <i class="fas fa-flag-usa" id="currentFlag"></i> <span id="currentLangText">English</span> <i class="fas fa-chevron-down"></i>
       </button>
       <div class="dropdown-content">
-        <a href="#" data-lang="en" data-flag="usa" data-text="English"><i class="fas fa-flag-usa"></i> English</a>
-        <a href="#" data-lang="id" data-flag="id" data-text="Indonesia"><i class="fas fa-flag-id"></i> Indonesia</a>
+        <a href="#" data-lang="en" data-flag="usa" data-text="English">🇬🇧</a>
+        <a href="#" data-lang="id" data-flag="id" data-text="Indonesia">🇮🇩</a>
       </div>
     </div>
   </div>
@@ -382,7 +382,7 @@
 <script>
 // ======================== DATA PRODUK (19 BUNDLE) ========================
 const allProducts = [
-  { id:1, name_en:"Bundle #1 Alphabet & Numbers", name_id:"Bundle #1 Alfabet & Angka", price:"$14.90", icon:"🔤" },
+  { id:1, name_en:"Bundle #1 Alphabet & Numbers", name_id:"Bundle #1 Alfabet & Angka", price:"$14.90", imageUrl:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIrWSda1AHooV7OXPe8cj0HGTkAS2itccROtKxkylBpiIAWJKoYVrhP1lBCkkZfPlc3YyeJ102C1N5XrFgk1CQfGGsy_oTQCANXlF7CUrRjWUOW1UJUSVd9TWKDqHgYdtWkxapY8ay_wVVuq9cV_UZkx1JwYC49zZuMhKLzF9IVP-ObZJf8YLte4Azp-Q/s320/%231%20ALPHABET%20&amp;%20NUMBERS.png", checkoutLink:"https://lynk.id/digital_playground/zd948odyje6q" },
   { id:2, name_en:"Bundle #2 Shapes, Colors & School", name_id:"Bundle #2 Bentuk, Warna & Sekolah", price:"$14.90", icon:"🎨" },
   { id:3, name_en:"Bundle #3 My Body & Health", name_id:"Bundle #3 Tubuh & Kesehatan", price:"$14.90", icon:"🧠" },
   { id:4, name_en:"Bundle #4 Emotions & Feelings", name_id:"Bundle #4 Emosi & Perasaan", price:"$14.90", icon:"😊" },
@@ -456,20 +456,36 @@ function renderProducts(productsToRender, lang) {
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
-      <div class="product-img"><span style="font-size:2.8rem;">${p.icon}</span></div>
+      <div class="product-img">
+        <img src="${p.imageUrl}" alt="${name}" style="width:100%; height:100%; object-fit:cover;">
+      </div>
       <div class="product-info">
         <div class="product-title">${name}</div>
         <div class="product-price">${p.price}</div>
-        <button class="btn-buy" data-name="${name.replace(/&/g, "&amp;")}"><i class="fas fa-cart-shopping"></i> ${lang === "en" ? "Buy" : "Beli"}</button>
+        <button class="btn-buy" data-name="${name.replace(/&/g, "&amp;")}" data-link="${p.checkoutLink}">
+          <i class="fas fa-cart-shopping"></i> ${lang === "en" ? "Buy" : "Beli"}
+        </button>
       </div>
     `;
     container.appendChild(card);
   }
+  attachBuyEvents();
+}
+
+function attachBuyEvents() {
   document.querySelectorAll(".btn-buy").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      alert(currentLang === "en" ? `Thank you! Product "${btn.dataset.name}" will be available soon. Visit airadrawing.blogspot.com` : `Terima kasih! Produk "${btn.dataset.name}" akan segera tersedia. Kunjungi airadrawing.blogspot.com`);
-    });
+    btn.removeEventListener("click", handleBuy);
+    btn.addEventListener("click", handleBuy);
   });
+}
+
+function handleBuy(e) {
+  const link = e.currentTarget.getAttribute("data-link");
+  if (link && link !== "#") {
+    window.open(link, "_blank"); // buka tab baru
+  } else {
+    alert(currentLang === "en" ? "Payment link not available yet. Please contact us." : "Link pembayaran belum tersedia. Hubungi kami.");
+  }
 }
 
 function loadNextBatch() {
