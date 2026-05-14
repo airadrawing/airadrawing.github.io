@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgC8hEmeVbMvIvortmbY8pgLrShbxc3xPbIaUbSHiHRpya-DonE1CwtvjWNB0glP6hFocAwt1Sf-Pg0BTsSw9AX9sNFfuGVzYFfkUUs5v96VIkoQ5SKuNz_BoOuzMF84chG3nLso283DddjVZ_uYtnlUxrbTH9PXPtkYhrEkdZXehuUBQDHfzR03U9IzN0/s192/Aira%20Drawing%20Favico.png">
+  <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgC8hEmeVbMvIvortmbY8pgLrShbxc3xPbIaUbSHiHRpya-DonE1CwtvjWNB0glP6hFocAwt1Sf-Pg0BTsSw9AX9sNFfuGVzYFfkUUs5v96VIkoQ5SKuNz_BoOuzMF84chG3nLso283DddjVZ_uYtnlUxrbTH9PXPtkYhrEkdZXehuUBQDHfzR03U9IzN0/s192/Aira%20Drawing%20Favico.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>AD - Aira Drawing | no drama. just learning.</title>
+<meta name="description" content="Hand-drawn educational posters for kids 3-10 years. Full English, digital download. Fun learning without drama.">
+<meta name="keywords" content="kids posters, educational printable, hand-drawn, alphabet, numbers, English learning, homeschool">
+<meta name="author" content="Aira Drawing">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (Facebook/WhatsApp) -->
+<meta property="og:title" content="AD - Aira Drawing | no drama. just learning.">
+<meta property="og:description" content="Hand-drawn educational posters for kids 3-10 years. Full English, digital download. Fun learning without drama.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://airadrawing.github.io/">
+<meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgC8hEmeVbMvIvortmbY8pgLrShbxc3xPbIaUbSHiHRpya-DonE1CwtvjWNB0glP6hFocAwt1Sf-Pg0BTsSw9AX9sNFfuGVzYFfkUUs5v96VIkoQ5SKuNz_BoOuzMF84chG3nLso283DddjVZ_uYtnlUxrbTH9PXPtkYhrEkdZXehuUBQDHfzR03U9IzN0/s192/Aira%20Drawing%20Favico.pn">
+<meta property="og:site_name" content="Aira Drawing">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AD - Aira Drawing | no drama. just learning.">
+<meta name="twitter:description" content="Hand-drawn educational posters for kids 3-10 years. Full English, digital download. Fun learning without drama.">
+<meta name="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgC8hEmeVbMvIvortmbY8pgLrShbxc3xPbIaUbSHiHRpya-DonE1CwtvjWNB0glP6hFocAwt1Sf-Pg0BTsSw9AX9sNFfuGVzYFfkUUs5v96VIkoQ5SKuNz_BoOuzMF84chG3nLso283DddjVZ_uYtnlUxrbTH9PXPtkYhrEkdZXehuUBQDHfzR03U9IzN0/s192/Aira%20Drawing%20Favico.pn">
   <!-- Font Awesome 6 (gratis) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Google Fonts -->
@@ -41,20 +61,13 @@
       align-items: center;
       gap: 1rem;
     }
-    .logo-dummy {
-      width: 55px;
-      height: 55px;
-      background: #c76b4a;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.6rem;
-      color: #fef7e8;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    }
+.logo-img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;   /* biar bulat seperti sebelumnya */
+  object-fit: cover;    /* supaya gambar muat tanpa distorsi */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
     .site-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
@@ -309,7 +322,6 @@
     @media (max-width: 768px) {
       .container { padding: 1rem; }
       .products-grid { grid-template-columns: repeat(2,1fr); gap: 1rem; }
-      .logo-dummy { width: 45px; height: 45px; font-size: 1.2rem; }
       .site-title { font-size: 1.3rem; }
       .features-grid { gap: 1rem; }
     }
@@ -318,13 +330,14 @@
 <body>
 <div class="container">
   <div class="header-flex">
-    <div class="logo-area">
-      <div class="logo-dummy">AD</div>
-      <div>
-        <div class="site-title">AD - Aira Drawing</div>
-        <div class="tagline">no drama. just learning.</div>
-      </div>
-    </div>
+<div class="logo-area">
+  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhxeyBF8qsRkGleihxspiS9aiVtbD-UBMrZ8rV_72nyweFG67RlvJONQMHI-cxejwGUEWNS0kDhXKVndRjrN1hJrCosxODmS-NXoqt9RwF2EEaXVVTPVxnIzL20JPJTrIPPNsFbJ41sEldyO9RJnE79xwFIQzM9m_YqkP8QsVA-JZdrs8fsiPNB5pHSDR8/s1254/AD_fav.png" 
+       alt="AD Logo" class="logo-img">
+  <div>
+    <div class="site-title">AD - Aira Drawing</div>
+    <div class="tagline">no drama. just learning.</div>
+  </div>
+</div>
     <div class="lang-dropdown">
       <button class="lang-button" id="currentLangBtn">
         <i class="fas fa-flag-usa" id="currentFlag"></i> <span id="currentLangText">English</span> <i class="fas fa-chevron-down"></i>
@@ -338,7 +351,7 @@
 
   <!-- Keunggulan produk (4 card modern) -->
   <div class="features-section">
-    <div class="section-title">✨ <span data-i18n="why_title">Why AD Aira Drawing?</span> ✨</div>
+    <div class="section-title"><span data-i18n="why_title">Why AD - Aira Drawing?</span></div>
     <div class="features-grid">
       <div class="feature-card"><i class="fas fa-image"></i><h3 data-i18n="feat1_title">High Quality Graphics</h3><p data-i18n="feat1_desc">Gambar tajam, tidak pecah saat dicetak ukuran besar.</p></div>
       <div class="feature-card"><i class="fas fa-child"></i><h3 data-i18n="feat2_title">No Drama Learning</h3><p data-i18n="feat2_desc">Desain ramah anak, bikin belajar nggak terasa terbebani.</p></div>
@@ -361,7 +374,7 @@
   </div>
 
   <div class="footer">
-    <i class="fas fa-globe"></i> airadrawing.blogspot.com — <span data-i18n="footer"></span><br>
+    <i class="fas fa-globe"></i> airadrawing.github.io — <span data-i18n="footer"></span><br>
     &copy; 2025 Aira Drawing.
   </div>
 </div>
@@ -412,7 +425,7 @@ const i18n = {
     bundles_title: "Edu Bundles",
     testimonials: "Testimonials",
     load_more: "Show more",
-    footer: "Original hand-crayon designs.",
+    footer: "github.com",
     support_us: "Support us via PayPal"
   },
   id: {
@@ -424,7 +437,7 @@ const i18n = {
     bundles_title: "Paket Edukasi",
     testimonials: "Testimoni",
     load_more: "Tampilkan lebih banyak",
-    footer: "Desain asli hand-crayon.",
+    footer: "github.com",
     support_us: "Dukung kami via PayPal"
   }
 };
