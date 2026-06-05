@@ -325,6 +325,123 @@
       .site-title { font-size: 1.3rem; }
       .features-grid { gap: 1rem; }
     }
+      .float-request {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #c76b4a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 1000;
+    transition: 0.2s;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+  }
+  .float-request i {
+    font-size: 1.2rem;
+  }
+  .float-request:hover {
+    background: #b25c3e;
+    transform: scale(1.02);
+  }
+  @media (max-width: 768px) {
+    .float-request {
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      bottom: 15px;
+      right: 15px;
+    }
+  }
+    /* modal background overlay */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background: #fef7e8;
+    border-radius: 32px;
+    max-width: 500px;
+    width: 90%;
+    padding: 2rem;
+    position: relative;
+    border: 1px solid #f5e4d2;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    font-family: 'Inter', sans-serif;
+  }
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #c76b4a;
+  }
+  .modal-content h3 {
+    font-family: 'Playfair Display', serif;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+  }
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #5d5342;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 40px;
+    border: 1px solid #f5e6d8;
+    background: white;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+  }
+  .form-group textarea {
+    border-radius: 24px;
+    resize: vertical;
+  }
+  .submit-btn {
+    background: #c76b4a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 60px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+  }
+  .submit-btn:hover {
+    background: #b25c3e;
+  }
+  .loading-spinner {
+    display: none;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  @media (max-width: 600px) {
+    .modal-content { padding: 1.5rem; }
+  }
+
   </style>
 </head>
 <body>
@@ -382,25 +499,25 @@
 <script>
 // ======================== DATA PRODUK (19 BUNDLE) ========================
 const allProducts = [
-  { id:1, name_en:"Bundle #1 Alphabet & Numbers", name_id:"Bundle #1 Alfabet & Angka", price:"$14.90", imageUrl:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIrWSda1AHooV7OXPe8cj0HGTkAS2itccROtKxkylBpiIAWJKoYVrhP1lBCkkZfPlc3YyeJ102C1N5XrFgk1CQfGGsy_oTQCANXlF7CUrRjWUOW1UJUSVd9TWKDqHgYdtWkxapY8ay_wVVuq9cV_UZkx1JwYC49zZuMhKLzF9IVP-ObZJf8YLte4Azp-Q/s320/%231%20ALPHABET%20&amp;%20NUMBERS.png", checkoutLink:"https://lynk.id/digital_playground/zd948odyje6q" },
-  { id:2, name_en:"Bundle #2 Shapes, Colors & School", name_id:"Bundle #2 Bentuk, Warna & Sekolah", price:"$14.90", icon:"🎨" },
-  { id:3, name_en:"Bundle #3 My Body & Health", name_id:"Bundle #3 Tubuh & Kesehatan", price:"$14.90", icon:"🧠" },
-  { id:4, name_en:"Bundle #4 Emotions & Feelings", name_id:"Bundle #4 Emosi & Perasaan", price:"$14.90", icon:"😊" },
-  { id:5, name_en:"Bundle #5 Good Character", name_id:"Bundle #5 Karakter Baik", price:"$14.90", icon:"🌟" },
-  { id:6, name_en:"Bundle #6 Farm Animals & Products", name_id:"Bundle #6 Hewan Ternak & Produk", price:"$14.90", icon:"🐄" },
-  { id:7, name_en:"Bundle #7 Wild Animals & Habitats", name_id:"Bundle #7 Hewan Liar & Habitat", price:"$14.90", icon:"🦁" },
-  { id:8, name_en:"Bundle #8 Nature & Ecosystems", name_id:"Bundle #8 Alam & Ekosistem", price:"$14.90", icon:"🌿" },
-  { id:9, name_en:"Bundle #9 Food & Nutrition", name_id:"Bundle #9 Makanan & Gizi", price:"$14.90", icon:"🥗" },
-  { id:10, name_en:"Bundle #10 Jobs & Professions", name_id:"Bundle #10 Pekerjaan & Profesi", price:"$14.90", icon:"👩‍⚕️" },
-  { id:11, name_en:"Bundle #11 Transportation", name_id:"Bundle #11 Transportasi", price:"$14.90", icon:"🚗" },
-  { id:12, name_en:"Bundle #12 Space & Beyond", name_id:"Bundle #12 Luar Angkasa", price:"$14.90", icon:"🚀" },
-  { id:13, name_en:"Bundle #13 Paper Crafts", name_id:"Bundle #13 Kerajinan Kertas", price:"$12.90", icon:"✂️" },
-  { id:14, name_en:"Bundle #14 Insects & Bugs", name_id:"Bundle #14 Serangga", price:"$14.90", icon:"🐞" },
-  { id:15, name_en:"Bundle #15 Around the World", name_id:"Bundle #15 Keliling Dunia", price:"$16.90", icon:"🌍" },
-  { id:16, name_en:"Bundle #16 Music & Instruments", name_id:"Bundle #16 Musik & Alat", price:"$14.90", icon:"🎵" },
-  { id:17, name_en:"Bundle #17 Sports & Moves", name_id:"Bundle #17 Olahraga & Gerak", price:"$14.90", icon:"⚽" },
-  { id:18, name_en:"Bundle #18 Mythology & Magic", name_id:"Bundle #18 Mitologi & Sihir", price:"$15.90", icon:"🦄" },
-  { id:19, name_en:"Bundle #19 Daily Routines", name_id:"Bundle #19 Rutinitas Harian", price:"$12.90", icon:"⏰" }
+  { id:1, name_en:"Bundle #1 Alphabet & Numbers", name_id:"Bundle #1 Alfabet & Angka", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIrWSda1AHooV7OXPe8cj0HGTkAS2itccROtKxkylBpiIAWJKoYVrhP1lBCkkZfPlc3YyeJ102C1N5XrFgk1CQfGGsy_oTQCANXlF7CUrRjWUOW1UJUSVd9TWKDqHgYdtWkxapY8ay_wVVuq9cV_UZkx1JwYC49zZuMhKLzF9IVP-ObZJf8YLte4Azp-Q/s320/%231%20ALPHABET%20&amp;%20NUMBERS.png", checkoutLink:"https://lynk.id/digital_playground/zd948odyje6q" },
+  { id:2, name_en:"Bundle #2 Shapes, Colors & School", name_id:"Bundle #2 Bentuk, Warna & Sekolah", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEiUT2LODYpZGnnAvN8yDsJTFMVlHODrW01ADFlPkKoA9B1DUy0hD5jBASjbw4bOD-OceBwnbTOzYoDZxVsPvUD4IygIsR0a9vUBC7YaS_Qn7aG7KvOG_KqwtA3T2GTvfRSNBq4AWDVR-LvnRDe62CEaakz_iOxlCx3hBCkIgs-YafnC3CeA1SRBVkl_opYi", checkoutLink:"https://lynk.id/digital_playground/rgozx5k67zwe" },
+  { id:3, name_en:"Bundle #3 My Body & Health", name_id:"Bundle #3 Tubuh & Kesehatan", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEito9PC0CvAug9C03GOtNr37n5QL6nn4E0YUQ0L1xwaI78w-S4_ipX6kPfYJs8isjommH60q4sKZkWlksiEXxYlaPU52TD3Drf45UpAImURzM8g0eKtAwGp2bY1HgQv7duPOY16z5Y3pq9qvgZ-fqVtVrpPA-1nhN-AoofZ6C6VangZass8yIIaxisPYWPg", checkoutLink:"https://lynk.id/digital_playground/08yj1pjm680m" },
+  { id:4, name_en:"Bundle #4 Emotions & Feelings", name_id:"Bundle #4 Emosi & Perasaan", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEgkHBF3Pn-1TOziHFDl6k6Ni-ljjGiSGVA4JcaqQEMAFtAG8WpxwsG8uBscMqK_yNZ2YDCUK8GsKFZ1Xd1mF6vmTSCLdEEdV-Ap3ARrgN4wCmsnynUzaBO0Ruxt_nt7Wc0Kd9vnL6HXpoh5E0LLq0TJ7oGcxfY2lj8fZHElw_aFEcwBPrTGeBoR9NNrWKPt", checkoutLink:"https://lynk.id/digital_playground/4el7pl0xwppd" },
+  { id:5, name_en:"Bundle #5 Good Character", name_id:"Bundle #5 Karakter Baik", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEgscDiNRC9m6Z_fV5EJFCow5LtO9FYaJo8YKy4-AT0d8RGJ7xG6XhETBhwtPfXm0PzPm6_k9vqQMmTy2bVs5DugpyBRkTF6cqerRkULCXt11HT93RP6_JhtKpKWG0RrT4XmbBqATcAu5s6L3XQLIIqD9HnMl8heVhaP6XWm3Hmwc_0J1RxCEXymU0J2_BcC", checkoutLink:"https://lynk.id/digital_playground/jkmx4m2mq5w8" },
+  { id:6, name_en:"Bundle #6 Farm Animals & Products", name_id:"Bundle #6 Hewan Ternak & Produk", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEjSJQRjdME-saG3HNAMHRqz9lKpaoPlJVzkcOAmU-FakU0sS5yKupvEsrimC94TyXmSZ6s-xvX5O6IOEqAvxBC09B9ji3KSusbgQPnxS6Z0HDqLtET0yixByKYJeZPCNyIUGV0ES8LXsnQzKf12F7WDXDTGptDRaTpOEqozAzSdCjAmc7ILb2KSKg4WLqIC", checkoutLink:"https://lynk.id/digital_playground/kk0m56o9k820" },
+  { id:7, name_en:"Bundle #7 Wild Animals & Habitats", name_id:"Bundle #7 Hewan Liar & Habitat", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEjiqe319OGiuF5ElkYkVfVt4RIlmcs1Mfn1vOu2ibkHT1EbbtZLlnVP569aomgAkk7MbpF9-EX4E28djSLafQ9ZmNUngv4E3wS0r8uwARYs8ZK9NlNpfy9MfjfhqJqH-ubNMdxiYADz7_2NKvQeGLwLICETihbYAv4sqCv32f9G-J94cSijv4m7YsS8oGf7", checkoutLink:"https://lynk.id/digital_playground/772mdxn0n8j6" },
+  { id:8, name_en:"Bundle #8 Nature & Ecosystems", name_id:"Bundle #8 Alam & Ekosistem", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEgQKNgLvPNBGM7-zfV56hIgNlnQbI5j5fI5jFISc-XOPBTGJ6maF5X3P6jhkDmE9RBjMafx0jdj_ByeEH8lpItuvSv-ZNH4aONfnmQBeNOg5ZtrCJ2dv6GsnOaPk1ve5F172F5lDEI7dNxqdHVyURUsdyN2EsCrR7QYai614rWl5u2aB2pzbq_AnYfpUJxS", checkoutLink:"https://lynk.id/digital_playground/47e8x0p802zj" },
+  { id:9, name_en:"Bundle #9 Food & Nutrition", name_id:"Bundle #9 Makanan & Gizi", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEiWS6yLguZMmvngX3NrTFwB_rORgIscIS5fFa-JuQbDS4eSnyyQshuZD7o-fjqt9RR9h8XVlzzGnKdWveOgGFEm-JidxEBUqrqC57onKh1lBpQsxaqSaOaY8r04TEhGm46Oj_Ef7CrBYMBMdfqqdU8w57eueI0bf3pya5kaZiAMZGpQWQwXHP0Yx3pCOMeZ", checkoutLink:"https://lynk.id/digital_playground/6nyjmqjjxon9" },
+  { id:10, name_en:"Bundle #10 Jobs & Professions", name_id:"Bundle #10 Pekerjaan & Profesi", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEg-rQNcYoo9u6d3DIqR0KxkWU6dgRK8htWcKCpoPB2XYwa4zJVniSIWJ-D2pW50a2VdlOwEFyaDi3sT6ThD7VAfKMXT8GbGmzYhlTu3YkMPEs7ZuH07VqnRry0dcC684StGiM1v64Yhg9BkV3eouW0vq_aD-lg82NvVbepRCu6cfmFMwqDyZxeIS_eCagZ6", checkoutLink:"https://lynk.id/digital_playground/z23me593o8r8" },
+  { id:11, name_en:"Bundle #11 Transportation", name_id:"Bundle #11 Transportasi", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEg1PE74nLhSJV3At9-S7hDGZ2Dj0CvDsfbik7jNeQdUpOdO12Kape8W0H2YgfDltXyiOQ32bMBQzqGdejSGLPiJTqPmrMDc5z1EUB0VFLLYkyGnLtDqyZfOI3gSbBj2nVlLOKql0kOEZQtctFkx0R8fLBtjHTSXRk9aGFJpC87UNGw0ociAuE4U6Y0iCq-K", checkoutLink:"https://lynk.id/digital_playground/wry6dx5qvkzz" },
+  { id:12, name_en:"Bundle #12 Space & Beyond", name_id:"Bundle #12 Luar Angkasa", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEhR2JZ83FO4iSTha8Qu99J7oMZizmg7gS0Syp1uNV81Mkwn8rUQy4DTo-eumGOFkAoLi2DyY_s8X0dugiPBPe0ZUuoPWZIL26fuLBQVYb3gbk2HwAGb4tyGYKhFIKMrYi7LHQ0zQfJYngBdd-AGMTe4laYCpKXDAyDRX6mXcxN4pAdsCEqk_u8-K-uIJI0G", checkoutLink:"https://lynk.id/digital_playground/mz68oj62y84k" },
+  { id:13, name_en:"Bundle #13 Paper Crafts", name_id:"Bundle #13 Kerajinan Kertas", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEiaXvxtcZ1IcbsztXsXoI5jrLmtzgBoeSuru9_ypTzxJJX3VcMTH9Maq2bLV83HsOm0ALHn7ckysNXrKhA8B6Qn1et1FP4V-2U0BpgAOieEPrmxuzF3g39UaOC0TvgVn3jBdOtw-O7u-t1RU807tKsV4p2A6ZYmylT50b8gCm5BzOroBwENK8udr60Bm_z_", checkoutLink:"https://lynk.id/digital_playground/q9lnogw32o7w" },
+  { id:14, name_en:"Bundle #14 Insects & Bugs", name_id:"Bundle #14 Serangga", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEj6LmGI5YBSC9sbV-xBj6IZ2A4GI6cBWJprqH4kGvZFJDb0SF5pzegQW43lM9cfDdR34lNbbN1_XCiAt41yPuE4s6-b4Arx1C7Cnx_a9TGnpbeURvtzgDYs-epdR7bcxCVNfNadqTdcohlwaVVBsvSITh7KYAV_bwN-jxEZUb1ZbN1360xE2eRZdzmqhO1S", checkoutLink:"https://lynk.id/digital_playground/r5legwz17jge" },
+  { id:15, name_en:"Bundle #15 Around the World", name_id:"Bundle #15 Keliling Dunia", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEguVWPvbSMU0SJZYvQkLYkeWyFNTF2iJFXt9yOCyncaxu7jWjbrIOuEsJBqFKBl_4rT9Ab0RK3P-lSYaK6QyHGVXYwKf9navmcgtnoLPmwLuH49CPTTjOdxYa8Q-DqlDtgFF51R6ZNeB2vgvPSED5z57SAblj2UB3ANtT92MnjSxtRmEbiFZ9SvHoC9AGcO", checkoutLink:"https://lynk.id/digital_playground/love4gw7vy4j" },
+  { id:16, name_en:"Bundle #16 Music & Instruments", name_id:"Bundle #16 Musik & Alat", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEht52cBeSDT1iCYgehJbojku9Ng5dpsMaQBjIr4NSX8q8eNttVBvzQSeMj_rNDVnO0CawpE8nBukAaYhmIP7-Yg_KGzDOhuSC70B6USrnQnOShqOf3xkRKxxLHMhKvOPdXFnUP-2wI9Gvqw4WIv6DXIZUJvAhXyQVpX3yq7oXV5nw3is-kxbGIoZ9dtFxS3", checkoutLink:"https://lynk.id/digital_playground/qoe416770y70" },
+  { id:17, name_en:"Bundle #17 Sports & Moves", name_id:"Bundle #17 Olahraga & Gerak", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEjfwLTrZYOb6zeHpQ4qcsO13ym44U_23KB5THCkXHeCoDyDrZSu5BqWWxo4MGyeiePmdF9Idw4A7F21L84flE_52nKz6oGPT4kAIi1Y4Wja92pPDa6SD23ctqH8JEn27z1mk2zEsuImsuepo5eitcRi0YefyGqRYztY3vYccs93P7hUe_WUzhSQFKvk5zU_", checkoutLink:"https://lynk.id/digital_playground/pwoz4e0krg5v" },
+  { id:18, name_en:"Bundle #18 Home & Family", name_id:"Bundle #18 Rumah & Keluarga", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEizU_UWGqNCOQHhT2a3dTnHZz55ygLyYjysMkzi4WWGTJdlD1aog9O4RaGvQMPjmrob2Sf8UX0i2QjulSGYsotZvUld19gatVoPFQZbP9DbyFVjeyQVmdC02hq_XkUrXAVuG38j3ni7yBwjMhk6iRFmZ21ycMZrST71RzNdvBl8q3gUUbstThEzj7iULt_a", checkoutLink:"https://lynk.id/digital_playground/06dj7l93wxog" },
+  { id:19, name_en:"Bundle #19 Ocean & Water Life", name_id:"Bundle #19 Laut dan Kehidupannya", price:"$1.90", imageUrl:"https://blogger.googleusercontent.com/img/a/AVvXsEjTgA-b2f_GGyfs1x1mT2tk3yGKpp6_TYx0Qzd1kd5ee1r-q3pymx1WSpp4ME-oqPFZoYO9RUf807owKjb6VDUdkTs1PS0y15QaOPmxY-AOF52-vZ8Nyi5KU_pXccO-zH8gxwb8kHloVm_-rRcOW857ftCS2jMNYufF01q3mJggW050KT93YEYOAZU6AA9J", checkoutLink:"https://lynk.id/digital_playground/kj9y4xee8pmr" },
 ];
 
 // ======================== REVIEWS (7) ========================
@@ -455,18 +572,21 @@ function renderProducts(productsToRender, lang) {
     const name = lang === "en" ? p.name_en : p.name_id;
     const card = document.createElement("div");
     card.className = "product-card";
-    card.innerHTML = `
-      <div class="product-img">
-        <img src="${p.imageUrl}" alt="${name}" style="width:100%; height:100%; object-fit:cover;">
-      </div>
-      <div class="product-info">
-        <div class="product-title">${name}</div>
-        <div class="product-price">${p.price}</div>
-        <button class="btn-buy" data-name="${name.replace(/&/g, "&amp;")}" data-link="${p.checkoutLink}">
-          <i class="fas fa-cart-shopping"></i> ${lang === "en" ? "Buy" : "Beli"}
-        </button>
-      </div>
-    `;
+card.innerHTML = `
+  <div class="product-img">
+    <img src="${p.imageUrl.replace(/\/s\d+/, '/s400')}" 
+         alt="${name}" 
+         style="width:100%; height:100%; object-fit:cover;"
+         loading="lazy">
+  </div>
+  <div class="product-info">
+    <div class="product-title">${name}</div>
+    <div class="product-price">${p.price}</div>
+    <button class="btn-buy" data-name="${name.replace(/&/g, "&amp;")}" data-link="${p.checkoutLink}">
+      <i class="fas fa-cart-shopping"></i> ${lang === "en" ? "I Want This" : "Beli"}
+    </button>
+  </div>
+`;
     container.appendChild(card);
   }
   attachBuyEvents();
@@ -588,12 +708,101 @@ document.querySelectorAll(".dropdown-content a").forEach(link => {
 // Support PayPal button
 document.getElementById("paypalSupportBtn").addEventListener("click", () => {
   // Ganti dengan link PayPal lo nanti
-  window.open("https://www.paypal.com/donate?hosted_button_id=YOUR_ID", "_blank");
+  window.open("https://paypal.me/airadrawing", "_blank");
   alert(currentLang === "en" ? "Redirecting to PayPal. Thank you for your support!" : "Mengarahkan ke PayPal. Terima kasih dukungannya!");
 });
 
 loadBtn.addEventListener("click", loadNextBatch);
 detectLanguageByIP();
+</script>
+<div class="float-request" id="customRequestBtn">
+  <i class="fas fa-pencil-alt"></i> Custom Order / Request
+</div>
+<div id="customOrderModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h3>🎨 Custom Order / Request Desain</h3>
+    <form id="customOrderForm" action="https://formsubmit.co/dedebebe921@gmail.com" method="POST">
+      <!-- FormSubmit konfigurasi -->
+      <input type="hidden" name="_subject" value="New Custom Order Request from Aira Drawing">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://airadrawing.github.io/thanks.html"> <!-- optional, biar kosong -->
+
+      <div class="form-group">
+        <label>Nama / Name</label>
+        <input type="text" name="Nama" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="Email" required>
+      </div>
+      <div class="form-group">
+        <label>Request / Pesanan</label>
+        <textarea name="Request" rows="4" placeholder="Example: Dinosaur Poster, A4, full English, custom name..." required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Request</button>
+      <div class="loading-spinner" id="loadingSpinner">⏳ Sending...</div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Popup logic
+  const modal = document.getElementById('customOrderModal');
+  const requestBtn = document.getElementById('customRequestBtn');
+  const closeBtn = document.querySelector('.close-modal');
+  const form = document.getElementById('customOrderForm');
+  const spinner = document.getElementById('loadingSpinner');
+
+  function openModal() {
+    modal.style.display = 'flex';
+  }
+  function closeModal() {
+    modal.style.display = 'none';
+  }
+
+  if (requestBtn) {
+    requestBtn.addEventListener('click', openModal);
+  } else {
+    console.log("Tombol 'customRequestBtn' tidak ditemukan, pastikan id-nya benar.");
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Handle form submit
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    spinner.style.display = 'block';
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+
+    fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      spinner.style.display = 'none';
+      if (response.ok) {
+        alert('Thank you.');
+        form.reset();
+        closeModal();
+      } else {
+        alert('Failed to send. try email to dedebebe921@gmail.com');
+      }
+    })
+    .catch(error => {
+      spinner.style.display = 'none';
+      alert('Error: ' + error.message);
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+    });
+  });
 </script>
 </body>
 </html>
