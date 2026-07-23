@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Romeo & Juliet</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Terhubung ke file CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- AUDIO -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FLOATING MUSIC BUTTON (TOP RIGHT) -->
+    <div id="music-btn" onclick="toggleMusic()">
+        <i class="fas fa-compact-disc fa-spin"></i>
+    </div>
+
+    <!-- BOTTOM NAVIGATION (Muncul setelah dibuka) -->
+    <nav class="bottom-nav" id="bottom-nav">
+        <a href="#hero" title="Home"><i class="fas fa-home"></i></a>
+        <a href="#couple" title="Mempelai"><i class="fas fa-heart"></i></a>
+        <a href="#event" title="Jadwal"><i class="far fa-calendar-alt"></i></a>
+        <a href="#gallery" title="Galeri"><i class="fas fa-images"></i></a>
+        <a href="#gift" title="Kado"><i class="fas fa-gift"></i></a>
+        <a href="#rsvp" title="RSVP"><i class="fas fa-comment-dots"></i></a>
+    </nav>
+
+    <!-- LIGHTBOX UNTUK GALERI -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-img" id="lightbox-img" src="">
+    </div>
+
+    <!-- COVER PAGE -->
+    <div id="cover-page">
+        <h4>THE WEDDING OF</h4>
+        <h1>Romeo & Juliet</h1>
+        <p class="to-guest">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        <button class="btn-open" onclick="openInvitation()">
+            <i class="fas fa-envelope-open-text"></i> Buka Undangan
+        </button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content">
+        
+        <!-- HERO SECTION -->
+        <section id="hero">
+            <div class="hero-content">
+                <p>WE ARE GETTING MARRIED</p>
+                <h1>Romeo & Juliet</h1>
+                <p>Minggu, 20 Desember 2026</p>
+                
+                <div class="countdown">
+                    <div class="time-box"><span id="days">00</span><p>Hari</p></div>
+                    <div class="time-box"><span id="hours">00</span><p>Jam</p></div>
+                    <div class="time-box"><span id="minutes">00</span><p>Menit</p></div>
+                    <div class="time-box"><span id="seconds">00</span><p>Detik</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFIL PASANGAN -->
+        <section id="couple">
+            <h2 class="section-title">Mempelai</h2>
+            <div class="couple-wrapper">
+                
+                <!-- Ornamen Garis Estetik SVG Kiri Atas -->
+                <svg class="ornament ornament-tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 90 L10 10 L90 10" stroke="var(--primary-color)" stroke-width="1.5"/>
+                    <path d="M10 30 L30 10 M10 50 L50 10 M10 70 L70 10" stroke="var(--primary-color)" stroke-width="1"/>
+                    <circle cx="10" cy="10" r="3" fill="var(--primary-color)"/>
+                    <path d="M25 25 C 20 15, 35 15, 35 25 C 35 35, 25 35, 25 25 Z" stroke="var(--primary-color)" stroke-width="1.5"/>
+                </svg>
+
+                <div class="person">
+                    <img src="https://images.unsplash.com/photo-1542042161784-26ab9e041e89?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Romeo">
+                    <h3>Romeo Montague</h3>
+                    <p>Putra dari Bapak Fulan & Ibu Fulanah</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="person">
+                    <img src="https://images.unsplash.com/photo-1549416878-b9ca95e1bb68?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Juliet">
+                    <h3>Juliet Capulet</h3>
+                    <p>Putri dari Bapak Fulan & Ibu Fulanah</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+
+                <!-- Ornamen Garis Estetik SVG Kanan Bawah -->
+                <svg class="ornament ornament-br" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 90 L10 10 L90 10" stroke="var(--primary-color)" stroke-width="1.5"/>
+                    <path d="M10 30 L30 10 M10 50 L50 10 M10 70 L70 10" stroke="var(--primary-color)" stroke-width="1"/>
+                    <circle cx="10" cy="10" r="3" fill="var(--primary-color)"/>
+                    <path d="M25 25 C 20 15, 35 15, 35 25 C 35 35, 25 35, 25 25 Z" stroke="var(--primary-color)" stroke-width="1.5"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- EVENT PLANNER -->
+        <section id="event">
+            <h2 class="section-title">Jadwal Acara</h2>
+            
+            <div class="event-card">
+                <h3>Akad Nikah</h3>
+                <p><i class="far fa-calendar-alt event-icon"></i> Minggu, 20 Desember 2026</p>
+                <p><i class="far fa-clock event-icon"></i> 08.00 - 10.00 WIB</p>
+                <p><i class="fas fa-map-marker-alt event-icon"></i> <strong>Masjid Agung Kota</strong><br>Jl. Jenderal Sudirman No. 1, Jakarta</p>
+                <a href="#" class="btn-map"><i class="fas fa-map-marked-alt"></i> Buka Google Maps</a>
+            </div>
+
+            <div class="event-card">
+                <h3>Resepsi Pernikahan</h3>
+                <p><i class="far fa-calendar-alt event-icon"></i> Minggu, 20 Desember 2026</p>
+                <p><i class="far fa-clock event-icon"></i> 11.00 - 14.00 WIB</p>
+                <p><i class="fas fa-map-marker-alt event-icon"></i> <strong>Grand Ballroom Hotel</strong><br>Jl. Gatot Subroto No. 99, Jakarta</p>
+                <a href="#" class="btn-map"><i class="fas fa-map-marked-alt"></i> Buka Google Maps</a>
+            </div>
+        </section>
+
+        <!-- GALERI FOTO (GRID 2 KOLOM) -->
+        <section id="gallery">
+            <h2 class="section-title">Galeri Kami</h2>
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb02151ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gallery 1" onclick="openLightbox(this.src)">
+                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gallery 2" onclick="openLightbox(this.src)">
+                <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gallery 3" onclick="openLightbox(this.src)">
+                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gallery 4" onclick="openLightbox(this.src)">
+            </div>
+        </section>
+
+        <!-- SISTEM KADO -->
+        <section id="gift">
+            <h2 class="section-title">Kirim Kado</h2>
+            <p class="gift-intro">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun, jika Anda ingin memberikan tanda kasih, dapat melalui fitur di bawah ini:</p>
+            
+            <div class="gift-container">
+                <!-- Cashless -->
+                <div class="gift-card">
+                    <h4><i class="fas fa-wallet"></i> Kado Cashless (Transfer)</h4>
+                    <div class="bank-details">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" width="70" class="bank-logo">
+                        <p>No. Rekening: <span id="rek1" class="rek-text">1234567890</span></p>
+                        <p>A.n. Romeo Montague</p>
+                        <button class="btn-copy" onclick="copyText('1234567890')"><i class="far fa-copy"></i> Salin No. Rekening</button>
+                    </div>
+                </div>
+
+                <!-- Kirim Fisik -->
+                <div class="gift-card">
+                    <h4><i class="fas fa-box-open"></i> Kirim Kado Fisik</h4>
+                    <div class="bank-details">
+                        <p><strong>Penerima:</strong> Juliet Capulet</p>
+                        <p id="alamat">Perumahan Mawar Asri Blok C No. 15, RT 01/RW 02, Kel. Sudirman, Jakarta Selatan, 12345</p>
+                        <button class="btn-copy" onclick="copyText(document.getElementById('alamat').innerText)"><i class="far fa-copy"></i> Salin Alamat</button>
+                    </div>
+                </div>
+
+                <!-- Wishlist -->
+                <div class="gift-card">
+                    <h4><i class="fas fa-gift"></i> Wishlist Kado</h4>
+                    <ul class="wishlist-list">
+                        <li>Microwave Oven</li>
+                        <li>Bed Cover Set (Ukuran King)</li>
+                        <li>Set Alat Masak (Teflon)</li>
+                        <li>Voucher Belanja IKEA</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP & GUESTBOOK -->
+        <section id="rsvp">
+            <h2 class="section-title">RSVP & Ucapan</h2>
+            <div class="rsvp-wrapper">
+                <form id="rsvpForm">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" class="form-control" placeholder="Tulis nama Anda (Anonim diizinkan)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="email@anda.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendance">Kehadiran</label>
+                        <select id="attendance" class="form-control" required>
+                            <option value="" disabled selected>Pilih status kehadiran...</option>
+                            <option value="Hadir">Fix datang! 🔥</option>
+                            <option value="Tidak Hadir">Maaf bestie, skip dulu ya 🙏</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Kirim Ucapan</label>
+                        <textarea id="message" class="form-control" rows="4" placeholder="Tuliskan doa untuk kedua mempelai..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Kirim Ucapan</button>
+                </form>
+
+                <!-- List Komentar -->
+                <div class="comments-section" id="commentsList">
+                    <!-- Komentar akan dimuat otomatis oleh JavaScript dari Google Sheets -->
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Terhubung ke file JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
