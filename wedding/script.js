@@ -69,7 +69,7 @@ document.getElementById('lightbox').addEventListener('click', function(e) {
 /* ================================
    3. COUNTDOWN TIMER
    ================================ */
-const weddingDate = new Date("Jul 11, 2026 08:00:00").getTime();
+const weddingDate = new Date("2026-07-11T08:00:00+08:00").getTime();
 const timer = setInterval(function() {
     const now = new Date().getTime();
     const distance = weddingDate - now;
