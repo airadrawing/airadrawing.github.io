@@ -181,3 +181,20 @@ form.addEventListener('submit', e => {
             console.error('Error!', error.message);
         });
 });
+
+/* ================================
+   6. VISIBILITY API (MATIKAN MUSIK SAAT PINDAH TAB)
+   ================================ */
+// Deteksi saat tab browser tidak aktif atau aktif kembali
+document.addEventListener("visibilitychange", function() {
+    // Pastikan musik hanya diatur jika tombol "Buka Undangan" sudah diklik (isPlaying = true)
+    if (document.hidden) {
+        // Jika tab ditinggalkan/disembunyikan, pause musiknya
+        music.pause();
+    } else {
+        // Jika tamu kembali ke tab undangan AND sebelumnya musik sedang menyala
+        if (isPlaying) {
+            music.play();
+        }
+    }
+});
