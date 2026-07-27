@@ -1,4 +1,19 @@
 /* ================================
+   0. BACA NAMA TAMU DARI URL
+   ================================ */
+const urlParams = new URLSearchParams(window.location.search);
+const guest = urlParams.get('to');
+const guestNameElement = document.getElementById('guestName');
+
+if (guest) {
+    // Jika ada parameter ?to= di link, tampilkan namanya
+    guestNameElement.innerText = guest;
+} else {
+    // Jika link dibuka polosan, tampilkan teks default
+    guestNameElement.innerText = "Tamu Undangan"; 
+}
+
+/* ================================
    1. KONTROL UNDANGAN & MUSIK
    ================================ */
 const music = document.getElementById('bg-music');
