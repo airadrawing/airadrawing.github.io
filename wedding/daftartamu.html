@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Link Undangan</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        input { width: 90%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        button { border: none; padding: 12px 20px; border-radius: 5px; font-size: 15px; cursor: pointer; width: 100%; font-weight: bold; color: white; transition: 0.3s; }
+        .btn-wa { background: #25D366; margin-top: 15px; }
+        .btn-wa:hover { background: #1ebe56; }
+        .btn-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); margin-top: 10px; }
+        .btn-ig:hover { opacity: 0.9; }
+        .result { margin-top: 20px; background: #e9ecef; padding: 10px; border-radius: 5px; word-break: break-all; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Buat Link Undangan</h2>
+        <p style="color: #666; font-size: 14px;">Ketik nama tamu untuk membuat link otomatis</p>
+        
+        <input type="text" id="inputNama" placeholder="Contoh: Budi Santoso & Partner" oninput="generateLink()">
+        
+        <div class="result" id="outputLink">
+            https://airadrawing.github.io/wedding/
+        </div>
+
+        <!-- Tombol WhatsApp -->
+        <button class="btn-wa" onclick="shareWhatsApp()">
+            Kirim via WhatsApp
+        </button>
+
+        <!-- Tombol Salin untuk IG -->
+        <button class="btn-ig" id="btnCopy" onclick="copyForIG()">
+            Salin Pesan (Untuk IG / DM)
+        </button>
+    </div>
+
+    <script>
+        // Ganti dengan URL utama Anda
+        const baseURL = "https://airadrawing.github.io/wedding/";
+        let finalURL = baseURL;
+
+        function generateLink() {
+            const nama = document.getElementById('inputNama').value;
+            if(nama.trim() === "") {
+                finalURL = baseURL;
+            } else {
+                finalURL = baseURL + "?to=" + encodeURIComponent(nama);
+            }
+            document.getElementById('outputLink').innerText = finalURL;
+        }
+
+        // Fungsi untuk mengambil teks template undangan
+        function getMessageText() {
+            const nama = document.getElementById('inputNama').value || "Tamu Undangan";
+            return `Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i:\n\n*${nama}*\n\nUntuk menghadiri acara pernikahan kami. Berikut tautan undangan kami:\n${finalURL}\n\nMerupakan suatu kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.\nTerima kasih.`;
+        }
+
+        // Fitur Kirim WhatsApp
+        function shareWhatsApp() {
+            const pesan = getMessageText();
+            const waLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(pesan);
+            window.open(waLink, '_blank');
+        }
+
+        // Fitur Salin untuk Instagram
+        function copyForIG() {
+            const pesan = getMessageText();
+            navigator.clipboard.writeText(pesan).then(() => {
+                const btnCopy = document.getElementById('btnCopy');
+                const originalText = btnCopy.innerText;
+                
+                // Ubah teks tombol sementara
+                btnCopy.innerText = "✓ Pesan Berhasil Disalin!";
+                btnCopy.style.background = "#28a745"; // warna hijau sukses
+                
+                // Kembalikan seperti semula setelah 2.5 detik
+                setTimeout(() => {
+                    btnCopy.innerText = originalText;
+                    btnCopy.style.background = "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)";
+                }, 2500);
+            }).catch(err => {
+                alert("Gagal menyalin pesan.");
+            });
+        }
+    </script>
+
+</body>
+</html>
