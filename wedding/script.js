@@ -28,7 +28,7 @@ function openInvitation() {
     const mainContent = document.getElementById('main-content');
     mainContent.style.display = 'block';
     
-    // Tandai bahwa undangan sudah dibuka (untuk syarat munculnya menu bawah)
+    // Tandai bahwa undangan sudah dibuka (untuk menu bawah)
     isInvitationOpen = true; 
 
     setTimeout(() => {
@@ -65,7 +65,7 @@ function toggleMusic() {
 const bottomNav = document.getElementById('bottom-nav');
 
 window.addEventListener('scroll', function() {
-    // Menu bawah HANYA muncul jika: Undangan sudah dibuka DAN user scroll > 100px
+    // Menu bawah HANYA muncul jika: Undangan sudah dibuka DAN user scroll ke bawah
     if (isInvitationOpen && window.scrollY > 100) {
         bottomNav.classList.add('show');
     } else {
@@ -96,7 +96,6 @@ function closeLightbox() {
     document.getElementById('lightbox').classList.remove('show');
 }
 
-// Tutup jika mengklik area hitam
 document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target !== document.getElementById('lightbox-img')) {
         closeLightbox();
@@ -116,4 +115,4 @@ const timer = setInterval(function() {
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+    const seconds = Math.floor((distance % (10Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
