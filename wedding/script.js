@@ -27,12 +27,13 @@ function openInvitation() {
     document.body.style.overflow = 'auto';
     const mainContent = document.getElementById('main-content');
     mainContent.style.display = 'block';
-    isInvitationOpen = true; // Tandai bahwa undangan sudah dibuka
+    
+    // Tandai bahwa undangan sudah dibuka (untuk syarat munculnya menu bawah)
+    isInvitationOpen = true; 
 
     setTimeout(() => {
         cover.style.display = 'none';
         musicBtn.style.display = 'flex';
-        // BOTTOM NAV TIDAK DIMUNCULKAN DI SINI (Menunggu Scroll)
     }, 1000);
 
     playMusic();
@@ -59,12 +60,12 @@ function toggleMusic() {
 }
 
 /* ================================
-   2. SCROLL UNTUK MUNCULKAN MENU (BARU)
+   2. SCROLL UNTUK MUNCULKAN MENU
    ================================ */
 const bottomNav = document.getElementById('bottom-nav');
 
 window.addEventListener('scroll', function() {
-    // Jika undangan sudah dibuka dan user men-scroll lebih dari 100px ke bawah
+    // Menu bawah HANYA muncul jika: Undangan sudah dibuka DAN user scroll > 100px
     if (isInvitationOpen && window.scrollY > 100) {
         bottomNav.classList.add('show');
     } else {
@@ -84,22 +85,30 @@ document.addEventListener("visibilitychange", function() {
 });
 
 /* ================================
-   4. LIGHTBOX GALERI
+   4. LIGHTBOX GALERI (POP-UP FOTO)
    ================================ */
 function openLightbox(src) {
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').classList.add('show');
 }
-function closeLightbox() { document.getElementById('lightbox').classList.remove('show'); }
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('show');
+}
+
+// Tutup jika mengklik area hitam
 document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target !== document.getElementById('lightbox-img')) { closeLightbox(); }
+    if (e.target !== document.getElementById('lightbox-img')) {
+        closeLightbox();
+    }
 });
 
 /* ================================
    5. COUNTDOWN TIMER
    ================================ */
-// Tanggal Acara: 11 Agustus 2026 WITA (UTC+8)
+// Target: 11 Agustus 2026, Jam 08:00 WITA (UTC+8)
 const weddingDate = new Date("2026-08-11T08:00:00+08:00").getTime();
+
 const timer = setInterval(function() {
     const now = new Date().getTime();
     const distance = weddingDate - now;
@@ -107,4 +116,4 @@ const timer = setInterval(function() {
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds =Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+    const seconds = Math.floor((distance % (1000 * 60)) / Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
