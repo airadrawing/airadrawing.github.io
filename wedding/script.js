@@ -1,18 +1,12 @@
 /* ================================
-   0. BACA NAMA TAMU DARI URL
+   1. BACA NAMA TAMU DARI URL
    ================================ */
 const urlParams = new URLSearchParams(window.location.search);
 const guest = urlParams.get('to');
-const guestNameElement = document.getElementById('guestName');
-
-if (guest) {
-    guestNameElement.innerText = guest;
-} else {
-    guestNameElement.innerText = "Tamu Undangan"; 
-}
+document.getElementById('guestName').innerText = guest ? guest : "Tamu Undangan";
 
 /* ================================
-   1. KONTROL UNDANGAN & MUSIK
+   2. BUKA UNDANGAN & MUSIK
    ================================ */
 const music = document.getElementById('bg-music');
 const musicBtn = document.getElementById('music-btn');
@@ -21,18 +15,13 @@ let isPlaying = false;
 let isInvitationOpen = false;
 
 function openInvitation() {
-    const cover = document.getElementById('cover-page');
-    cover.style.top = '-100vh';
-    
+    document.getElementById('cover-page').style.top = '-100vh';
     document.body.style.overflow = 'auto';
-    const mainContent = document.getElementById('main-content');
-    mainContent.style.display = 'block';
-    
-    // Tandai bahwa undangan sudah dibuka (untuk menu bawah)
+    document.getElementById('main-content').style.display = 'block';
     isInvitationOpen = true; 
 
     setTimeout(() => {
-        cover.style.display = 'none';
+        document.getElementById('cover-page').style.display = 'none';
         musicBtn.style.display = 'flex';
     }, 1000);
 
@@ -60,12 +49,11 @@ function toggleMusic() {
 }
 
 /* ================================
-   2. SCROLL UNTUK MUNCULKAN MENU
+   3. SCROLL MENU BAWAH & VISIBILITY (TAB)
    ================================ */
 const bottomNav = document.getElementById('bottom-nav');
 
 window.addEventListener('scroll', function() {
-    // Menu bawah HANYA muncul jika: Undangan sudah dibuka DAN user scroll ke bawah
     if (isInvitationOpen && window.scrollY > 100) {
         bottomNav.classList.add('show');
     } else {
@@ -73,46 +61,40 @@ window.addEventListener('scroll', function() {
     }
 });
 
-/* ================================
-   3. VISIBILITY API (MATIKAN MUSIK SAAT PINDAH TAB)
-   ================================ */
 document.addEventListener("visibilitychange", function() {
-    if (document.hidden) {
-        music.pause();
-    } else {
-        if (isPlaying) { music.play(); }
-    }
+    if (document.hidden) { music.pause(); } 
+    else if (isPlaying) { music.play(); }
 });
 
 /* ================================
-   4. LIGHTBOX GALERI (POP-UP FOTO)
+   4. LIGHTBOX GALERI (POP-UP)
    ================================ */
 function openLightbox(src) {
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').classList.add('show');
 }
-
 function closeLightbox() {
     document.getElementById('lightbox').classList.remove('show');
 }
-
 document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target !== document.getElementById('lightbox-img')) {
-        closeLightbox();
-    }
+    if (e.target !== document.getElementById('lightbox-img')) closeLightbox();
 });
 
 /* ================================
    5. COUNTDOWN TIMER
    ================================ */
-// Target: 11 Agustus 2026, Jam 08:00 WITA (UTC+8)
 const weddingDate = new Date("2026-08-11T08:00:00+08:00").getTime();
 
 const timer = setInterval(function() {
     const now = new Date().getTime();
     const distance = weddingDate - now;
     
+    if (distance < 0) {
+        clearInterval(timer);
+        document.querySelector('.countdown').innerHTML = "<h3>Acara Sedang Berlangsung / Selesai</h3>";
+        return;
+    }
+
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (10Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
