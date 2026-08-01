@@ -357,3 +357,67 @@ body {
 .bottom-nav.show { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
 .bottom-nav a { color: var(--text-muted); font-size: 1.2rem; transition: 0.3s; text-decoration: none; }
 .bottom-nav a:hover { color: var(--primary-color); transform: translateY(-3px); }
+
+/* ==========================
+   TOAST
+========================== */
+
+.toast{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:100px;
+
+    transform:translateX(-50%) translateY(30px);
+
+    background:rgba(35,35,35,.95);
+
+    color:white;
+
+    padding:14px 20px;
+
+    border-radius:14px;
+
+    font-size:.9rem;
+
+    z-index:999999;
+
+    opacity:0;
+
+    transition:.35s;
+
+    pointer-events:none;
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:0 8px 25px rgba(0,0,0,.2);
+
+}
+
+.toast.show{
+
+    opacity:1;
+
+    transform:translateX(-50%) translateY(0);
+
+}
+
+.toast.success{
+
+    background:#2E7D32;
+
+}
+
+.toast.error{
+
+    background:#C62828;
+
+}
+
+.toast.info{
+
+    background:#1976D2;
+
+}
