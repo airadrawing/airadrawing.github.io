@@ -1,164 +1,1027 @@
-/* ================================
-   1. BACA NAMA TAMU DARI URL
-   ================================ */
-const urlParams = new URLSearchParams(window.location.search);
-const guest = urlParams.get('to');
-document.getElementById('guestName').innerText = guest ? guest : "Tamu Undangan";
+/*==========================================
+    CONFIG
+==========================================*/
 
-/* ================================
-   2. BUKA UNDANGAN & MUSIK
-   ================================ */
-const music = document.getElementById('bg-music');
-const musicBtn = document.getElementById('music-btn');
-const musicIcon = musicBtn.querySelector('i');
-let isPlaying = false;
-let isInvitationOpen = false;
+const CONFIG = {
 
-function openInvitation() {
-    document.getElementById('cover-page').style.top = '-100vh';
-    document.body.style.overflow = 'auto';
-    document.getElementById('main-content').style.display = 'block';
-    isInvitationOpen = true; 
+    weddingDate: "2026-08-11T08:00:00+08:00",
 
-    setTimeout(() => {
-        document.getElementById('cover-page').style.display = 'none';
-        musicBtn.style.display = 'flex';
-    }, 1000);
+    musicVolume: 0.35,
 
-    playMusic();
+    toastDuration: 2500,
+
+    smoothScroll: true,
+
+    animationOffset: 100
+
+};
+/*==========================================
+    DOM ELEMENT
+==========================================*/
+
+const ELEMENT = {
+
+    cover: document.getElementById("cover-page"),
+
+    content: document.getElementById("main-content"),
+
+    guestName: document.getElementById("guestName"),
+
+    music: document.getElementById("bg-music"),
+
+    musicButton: document.getElementById("music-btn"),
+
+    musicIcon: document.querySelector("#music-btn i"),
+
+    bottomNav: document.getElementById("bottom-nav"),
+
+    countdown: {
+
+        days: document.getElementById("days"),
+
+        hours: document.getElementById("hours"),
+
+        minutes: document.getElementById("minutes"),
+
+        seconds: document.getElementById("seconds")
+
+    },
+
+    lightbox: document.getElementById("lightbox"),
+
+    lightboxImage: document.getElementById("lightbox-img"),
+
+    rsvpForm: document.getElementById("rsvpForm"),
+
+    comments: document.getElementById("commentsList")
+
+};
+/*==========================================
+    LIGHTBOX
+==========================================*/
+
+function openLightbox(src){
+
+    ELEMENT.lightboxImage.src = src;
+
+    ELEMENT.lightbox.classList.add("show");
+
+    document.body.style.overflow = "hidden";
+
 }
+function closeLightbox(){
 
-function playMusic() {
-    music.play().then(() => {
-        isPlaying = true;
-        musicIcon.classList.add('fa-spin');
-    }).catch(e => console.log("Autoplay dicegah browser"));
+    ELEMENT.lightbox.classList.remove("show");
+
+    document.body.style.overflow = "auto";
+
 }
+ELEMENT.lightbox.addEventListener("click",e=>{
 
-function toggleMusic() {
-    if(isPlaying) {
-        music.pause();
-        musicIcon.classList.remove('fa-spin', 'fa-compact-disc');
-        musicIcon.classList.add('fa-volume-mute');
+    if(
+
+        e.target === ELEMENT.lightbox
+
+    ){
+
+        closeLightbox();
+
+    }
+
+});
+document.addEventListener("keydown",e=>{
+
+    if(
+
+        e.key==="Escape"
+
+    ){
+
+        closeLightbox();
+
+    }
+
+});
+/*==========================================
+    APP STATE
+==========================================*/
+
+const STATE = {
+
+    invitationOpened: false,
+
+    musicPlaying: false,
+
+    currentSection: "",
+
+    loading: false
+
+};
+/*==========================================
+    SHORTCUT
+==========================================*/
+
+const $ = selector => document.querySelector(selector);
+
+const $$ = selector => document.querySelectorAll(selector);
+function sleep(ms){
+
+    return new Promise(resolve=>{
+
+        setTimeout(resolve,ms);
+
+    });
+
+}
+function pad(number){
+
+    return number.toString().padStart(2,"0");
+
+}
+function escapeHTML(text){
+
+    const div=document.createElement("div");
+
+    div.innerText=text;
+
+    return div.innerHTML;
+
+}
+function formatDate(date){
+
+    return new Intl.DateTimeFormat("id-ID",{
+
+        weekday:"long",
+
+        year:"numeric",
+
+        month:"long",
+
+        day:"numeric"
+
+    }).format(date);
+
+}
+/*==========================================
+    TOAST NOTIFICATION
+==========================================*/
+
+let toastTimer = null;
+
+function showToast(message, type = "success") {
+
+    let toast = document.getElementById("toast");
+
+    if (!toast) {
+
+        toast = document.createElement("div");
+
+        toast.id = "toast";
+
+        document.body.appendChild(toast);
+
+    }
+
+    toast.className = "";
+
+    toast.classList.add("toast");
+
+    toast.classList.add(type);
+
+    toast.innerHTML = `
+        <span>${message}</span>
+    `;
+
+    requestAnimationFrame(() => {
+
+        toast.classList.add("show");
+
+    });
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, CONFIG.toastDuration);
+
+}
+/*==========================================
+    GUEST NAME
+==========================================*/
+
+function loadGuest() {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const guest = params.get("to");
+
+    ELEMENT.guestName.innerHTML = guest ?
+
+        escapeHTML(decodeURIComponent(guest))
+
+        :
+
+        "Tamu Undangan";
+
+}
+/*==========================================
+    MUSIC
+==========================================*/
+
+ELEMENT.music.volume = CONFIG.musicVolume;
+
+ELEMENT.music.loop = true;
+async function playMusic() {
+
+    try{
+
+        await ELEMENT.music.play();
+
+        STATE.musicPlaying = true;
+
+        ELEMENT.musicIcon.className =
+
+            "fas fa-compact-disc fa-spin";
+
+    }
+
+    catch(e){
+
+        console.log(e);
+
+    }
+
+}
+function pauseMusic(){
+
+    ELEMENT.music.pause();
+
+    STATE.musicPlaying = false;
+
+    ELEMENT.musicIcon.className =
+
+        "fas fa-volume-mute";
+
+}
+function toggleMusic(){
+
+    if(STATE.musicPlaying){
+
+        fadeOutMusic();
+
+    }
+
+    else{
+
+        fadeInMusic();
+
+    }
+
+}
+async function fadeInMusic(){
+
+    ELEMENT.music.volume = 0;
+
+    await ELEMENT.music.play();
+
+    STATE.musicPlaying = true;
+
+    ELEMENT.musicIcon.className =
+
+        "fas fa-compact-disc fa-spin";
+
+    let volume = 0;
+
+    const interval = setInterval(()=>{
+
+        volume += 0.05;
+
+        if(volume >= CONFIG.musicVolume){
+
+            volume = CONFIG.musicVolume;
+
+            clearInterval(interval);
+
+        }
+
+        ELEMENT.music.volume = volume;
+
+    },100);
+
+}
+function fadeOutMusic(){
+
+    let volume = ELEMENT.music.volume;
+
+    const interval = setInterval(()=>{
+
+        volume -= .05;
+
+        if(volume <= 0){
+
+            clearInterval(interval);
+
+            ELEMENT.music.pause();
+
+            ELEMENT.music.volume = CONFIG.musicVolume;
+
+            STATE.musicPlaying = false;
+
+            ELEMENT.musicIcon.className =
+
+                "fas fa-volume-mute";
+
+        }
+
+        else{
+
+            ELEMENT.music.volume = volume;
+
+        }
+
+    },100);
+
+}
+/*==========================================
+    OPEN INVITATION
+==========================================*/
+
+async function openInvitation(){
+
+    if(STATE.invitationOpened) return;
+
+    STATE.invitationOpened = true;
+
+    ELEMENT.cover.style.top = "-100vh";
+
+    document.body.style.overflow = "auto";
+
+    ELEMENT.content.style.display = "block";
+
+    await sleep(900);
+
+    ELEMENT.cover.style.display = "none";
+
+    ELEMENT.musicButton.style.display = "flex";
+
+    fadeInMusic();
+
+    showToast("Selamat datang ❤️","success")confetti();
+
+}
+document.addEventListener("visibilitychange",()=>{
+
+    if(document.hidden){
+
+        ELEMENT.music.pause();
+
+    }
+
+    else{
+
+        if(STATE.musicPlaying){
+
+            ELEMENT.music.play();
+
+        }
+
+    }
+
+});
+/*==========================================
+    COPY
+==========================================*/
+
+async function copyText(text){
+
+    try{
+
+        await navigator.clipboard.writeText(text);
+
+        showToast("Berhasil disalin");
+
+    }
+
+    catch{
+
+        showToast("Clipboard tidak didukung","error");
+
+    }
+
+}
+/*==========================================
+    COUNTDOWN
+==========================================*/
+
+function startCountdown() {
+
+    const target = new Date(CONFIG.weddingDate).getTime();
+
+    function update() {
+
+        const now = Date.now();
+
+        const distance = target - now;
+
+        if (distance <= 0) {
+
+            ELEMENT.countdown.days.textContent = "00";
+            ELEMENT.countdown.hours.textContent = "00";
+            ELEMENT.countdown.minutes.textContent = "00";
+            ELEMENT.countdown.seconds.textContent = "00";
+
+            return;
+        }
+
+        const day = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+        const hour = Math.floor(
+            (distance % (1000 * 60 * 60 * 24))
+            /
+            (1000 * 60 * 60)
+        );
+
+        const minute = Math.floor(
+            (distance % (1000 * 60 * 60))
+            /
+            (1000 * 60)
+        );
+
+        const second = Math.floor(
+            (distance % (1000 * 60))
+            /
+            1000
+        );
+
+        ELEMENT.countdown.days.textContent = pad(day);
+        ELEMENT.countdown.hours.textContent = pad(hour);
+        ELEMENT.countdown.minutes.textContent = pad(minute);
+        ELEMENT.countdown.seconds.textContent = pad(second);
+
+    }
+
+    update();
+
+    setInterval(update,1000);
+
+}
+/*==========================================
+    BOTTOM NAV
+==========================================*/
+
+function handleBottomNav(){
+
+    if(
+        STATE.invitationOpened &&
+        window.scrollY > 120
+    ){
+
+        ELEMENT.bottomNav.classList.add("show");
+
+    }
+
+    else{
+
+        ELEMENT.bottomNav.classList.remove("show");
+
+    }
+
+}
+window.addEventListener("scroll",handleBottomNav);
+/*==========================================
+    SMOOTH SCROLL
+==========================================*/
+
+$$(".bottom-nav a").forEach(item=>{
+
+    item.addEventListener("click",e=>{
+
+        e.preventDefault();
+
+        const target = item.getAttribute("href");
+
+        const section = document.querySelector(target);
+
+        if(!section) return;
+
+        section.scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"start"
+
+        });
+
+    });
+
+});
+/*==========================================
+    ACTIVE MENU
+==========================================*/
+
+const sections = $$("section");
+
+const navLinks = $$(".bottom-nav a");
+function activeMenu(){
+
+    let current = "";
+
+    sections.forEach(section=>{
+
+        const top = section.offsetTop - 150;
+
+        const height = section.offsetHeight;
+
+        if(window.scrollY >= top){
+
+            current = section.getAttribute("id");
+
+        }
+
+    });
+
+    navLinks.forEach(link=>{
+
+        link.classList.remove("active");
+
+        if(
+
+            link.getAttribute("href")
+
+            ===
+
+            "#" + current
+
+        ){
+
+            link.classList.add("active");
+
+        }
+
+    });
+
+}
+window.addEventListener("scroll",activeMenu);
+let startY = 0;
+
+ELEMENT.lightbox.addEventListener("touchstart",e=>{
+
+    startY = e.touches[0].clientY;
+
+});
+ELEMENT.lightbox.addEventListener("touchmove",e=>{
+
+    const move = e.touches[0].clientY;
+
+    if(move-startY>120){
+
+        closeLightbox();
+
+    }
+
+});
+function preloadImages(){
+
+    $$("img").forEach(img=>{
+
+        const image = new Image();
+
+        image.src = img.src;
+
+    });
+
+}
+function lazyImages(){
+
+    $$("img").forEach(img=>{
+
+        img.loading="lazy";
+
+    });
+
+}
+/*==========================================
+    SHARE INVITATION
+==========================================*/
+
+async function shareInvitation() {
+
+    const shareData = {
+
+        title: document.title,
+
+        text: "Anda diundang ke acara kami ❤️",
+
+        url: window.location.href
+
+    };
+
+    if (navigator.share) {
+
+        try {
+
+            await navigator.share(shareData);
+
+        } catch (err) {
+
+            console.log(err);
+
+        }
+
     } else {
-        music.play();
-        musicIcon.classList.add('fa-spin', 'fa-compact-disc');
-        musicIcon.classList.remove('fa-volume-mute');
-    }
-    isPlaying = !isPlaying;
-}
 
-/* ================================
-   3. SCROLL MENU BAWAH & VISIBILITY (TAB)
-   ================================ */
-const bottomNav = document.getElementById('bottom-nav');
+        copyText(window.location.href);
 
-window.addEventListener('scroll', function() {
-    if (isInvitationOpen && window.scrollY > 100) {
-        bottomNav.classList.add('show');
-    } else {
-        bottomNav.classList.remove('show');
-    }
-});
+        showToast("Link berhasil disalin");
 
-document.addEventListener("visibilitychange", function() {
-    if (document.hidden) { music.pause(); } 
-    else if (isPlaying) { music.play(); }
-});
-
-/* ================================
-   4. LIGHTBOX GALERI (POP-UP)
-   ================================ */
-function openLightbox(src) {
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox').classList.add('show');
-}
-function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('show');
-}
-document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target !== document.getElementById('lightbox-img')) closeLightbox();
-});
-
-/* ================================
-   5. COUNTDOWN TIMER
-   ================================ */
-const weddingDate = new Date("2026-08-11T08:00:00+08:00").getTime();
-
-setInterval(() => {
-
-    const now = new Date().getTime();
-    const distance = weddingDate - now;
-
-    if(distance < 0){
-        document.getElementById("days").innerText = "00";
-        document.getElementById("hours").innerText = "00";
-        document.getElementById("minutes").innerText = "00";
-        document.getElementById("seconds").innerText = "00";
-        return;
     }
 
-    document.getElementById("days").innerText =
-        Math.floor(distance/(1000*60*60*24));
-
-    document.getElementById("hours").innerText =
-        Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-
-    document.getElementById("minutes").innerText =
-        Math.floor((distance%(1000*60*60))/(1000*60));
-
-    document.getElementById("seconds").innerText =
-        Math.floor((distance%(1000*60))/1000);
-
-},1000);
-
-function copyText(text){
-
-    navigator.clipboard.writeText(text);
-
-    alert("Berhasil disalin");
 }
+/*==========================================
+    RIPPLE EFFECT
+==========================================*/
 
-const form = document.getElementById("rsvpForm");
-const commentsList = document.getElementById("commentsList");
+function ripple(event){
 
-form.addEventListener("submit",function(e){
+    const button = event.currentTarget;
+
+    const circle = document.createElement("span");
+
+    const diameter = Math.max(
+
+        button.clientWidth,
+
+        button.clientHeight
+
+    );
+
+    const radius = diameter / 2;
+
+    circle.style.width =
+
+        circle.style.height =
+
+        `${diameter}px`;
+
+    circle.style.left =
+
+        `${event.clientX -
+
+        button.offsetLeft -
+
+        radius}px`;
+
+    circle.style.top =
+
+        `${event.clientY -
+
+        button.offsetTop -
+
+        radius}px`;
+
+    circle.classList.add("ripple");
+
+    const ripple = button.getElementsByClassName("ripple")[0];
+
+    if(ripple){
+
+        ripple.remove();
+
+    }
+
+    button.appendChild(circle);
+
+}
+/*==========================================
+    SCROLL REVEAL
+==========================================*/
+
+const revealElements = $$(".reveal");
+function revealOnScroll(){
+
+    revealElements.forEach(el=>{
+
+        const top =
+
+            el.getBoundingClientRect().top;
+
+        if(
+
+            top <
+
+            window.innerHeight -
+
+            CONFIG.animationOffset
+
+        ){
+
+            el.classList.add("show");
+
+        }
+
+    });
+
+}
+window.addEventListener(
+
+    "scroll",
+
+    revealOnScroll
+
+);
+/*==========================================
+    GOOGLE MAP
+==========================================*/
+
+function openMaps(url){
+
+    window.open(url,"_blank");
+
+}
+/*==========================================
+    BUTTON LOADING
+==========================================*/
+
+function buttonLoading(
+
+    button,
+
+    status=true
+
+){
+
+    if(status){
+
+        button.disabled=true;
+
+        button.dataset.text=
+
+            button.innerHTML;
+
+        button.innerHTML=
+
+            '<i class="fa fa-spinner fa-spin"></i> Mengirim...';
+
+    }
+
+    else{
+
+        button.disabled=false;
+
+        button.innerHTML=
+
+            button.dataset.text;
+
+    }
+
+}
+const SCRIPT_URL="ISI_URL_GOOGLE_SCRIPT";
+/*==========================================
+    RSVP
+==========================================*/
+
+async function submitRSVP(e){
 
     e.preventDefault();
 
-    const nama = document.getElementById("name").value;
-    const hadir = document.getElementById("attendance").value;
-    const pesan = document.getElementById("message").value;
+    const form =
 
-    commentsList.innerHTML += `
-        <div class="comment-item">
-            <div class="comment-header">
-                <span class="comment-name">${nama}</span>
-                <span class="comment-badge ${hadir=="Tidak Hadir"?"absent":""}">
-                    ${hadir}
-                </span>
-            </div>
-            <div class="comment-text">${pesan}</div>
-        </div>
-    `;
+        ELEMENT.rsvpForm;
 
-    form.reset();
+    const submit =
+
+        form.querySelector(
+
+            "button[type=submit]"
+
+        );
+
+    buttonLoading(
+
+        submit,
+
+        true
+
+    );
+
+    try{
+
+        const response=
+
+        await fetch(
+
+            SCRIPT_URL,
+
+            {
+
+                method:"POST",
+
+                body:new FormData(form)
+
+            }
+
+        );
+
+        const result=
+
+            await response.text();
+
+        showToast(
+
+            "Terima kasih ❤️"
+
+        );
+
+        form.reset();
+
+    }
+
+    catch(error){
+
+        showToast(
+
+            "Gagal mengirim",
+
+            "error"
+
+        );
+
+        console.log(error);
+
+    }
+
+    finally{
+
+        buttonLoading(
+
+            submit,
+
+            false
+
+        );
+
+    }
+
+}
+ELEMENT.rsvpForm.addEventListener(
+
+    "submit",
+
+    submitRSVP
+
+);
+/*==========================================
+    AUTO NAME
+==========================================*/
+
+function autoFillGuest(){
+
+    const params=
+
+        new URLSearchParams(
+
+            window.location.search
+
+        );
+
+    const guest=
+
+        params.get("to");
+
+    const input=
+
+        document.querySelector(
+
+            "#name"
+
+        );
+
+    if(
+
+        guest && input
+
+    ){
+
+        input.value=
+
+            decodeURIComponent(
+
+                guest
+
+            );
+
+    }
+
+}
+/*==========================================
+    CONFETTI
+==========================================*/
+
+function confetti(){
+
+    for(
+
+        let i=0;
+
+        i<40;
+
+        i++
+
+    ){
+
+        const div=
+
+        document.createElement(
+
+            "div"
+
+        );
+
+        div.className=
+
+            "confetti";
+
+        div.style.left=
+
+            Math.random()*100+"vw";
+
+        div.style.animationDelay=
+
+            Math.random()*1+"s";
+
+        div.style.background=
+
+            `hsl(${Math.random()*360},90%,60%)`;
+
+        document.body.appendChild(div);
+
+        setTimeout(()=>{
+
+            div.remove();
+
+        },4000);
+
+    }
+
+}
+/*==========================================
+    INIT
+==========================================*/
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+        loadGuest();
+
+        autoFillGuest();
+
+        startCountdown();
+
+        preloadImages();
+
+        lazyImages();
+
+        revealOnScroll();
+
+    }
+
+);
+
+window.addEventListener(
+
+    "scroll",
+
+    ()=>{
+
+        handleBottomNav();
+
+        activeMenu();
+
+    }
+
+);
+
+ELEMENT.musicButton.addEventListener(
+
+    "click",
+
+    toggleMusic
+
+);
+
+$$("button").forEach(button=>{
+
+    button.addEventListener(
+
+        "click",
+
+        ripple
+
+    );
 
 });
-
-document.querySelectorAll(".bottom-nav a").forEach(item=>{
-
-item.addEventListener("click",function(e){
-
-e.preventDefault();
-
-document.querySelector(this.getAttribute("href")).scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-});
-
-});
-const guest = decodeURIComponent(urlParams.get("to") || "Tamu Undangan");
