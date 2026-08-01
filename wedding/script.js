@@ -85,16 +85,80 @@ document.getElementById('lightbox').addEventListener('click', function(e) {
    ================================ */
 const weddingDate = new Date("2026-08-11T08:00:00+08:00").getTime();
 
-const timer = setInterval(function() {
+setInterval(() => {
+
     const now = new Date().getTime();
     const distance = weddingDate - now;
-    
-    if (distance < 0) {
-        clearInterval(timer);
-        document.querySelector('.countdown').innerHTML = "<h3>Acara Sedang Berlangsung / Selesai</h3>";
+
+    if(distance < 0){
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
         return;
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+    document.getElementById("days").innerText =
+        Math.floor(distance/(1000*60*60*24));
+
+    document.getElementById("hours").innerText =
+        Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+
+    document.getElementById("minutes").innerText =
+        Math.floor((distance%(1000*60*60))/(1000*60));
+
+    document.getElementById("seconds").innerText =
+        Math.floor((distance%(1000*60))/1000);
+
+},1000);
+
+function copyText(text){
+
+    navigator.clipboard.writeText(text);
+
+    alert("Berhasil disalin");
+}
+
+const form = document.getElementById("rsvpForm");
+const commentsList = document.getElementById("commentsList");
+
+form.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const nama = document.getElementById("name").value;
+    const hadir = document.getElementById("attendance").value;
+    const pesan = document.getElementById("message").value;
+
+    commentsList.innerHTML += `
+        <div class="comment-item">
+            <div class="comment-header">
+                <span class="comment-name">${nama}</span>
+                <span class="comment-badge ${hadir=="Tidak Hadir"?"absent":""}">
+                    ${hadir}
+                </span>
+            </div>
+            <div class="comment-text">${pesan}</div>
+        </div>
+    `;
+
+    form.reset();
+
+});
+
+document.querySelectorAll(".bottom-nav a").forEach(item=>{
+
+item.addEventListener("click",function(e){
+
+e.preventDefault();
+
+document.querySelector(this.getAttribute("href")).scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+});
+
+});
+const guest = decodeURIComponent(urlParams.get("to") || "Tamu Undangan");
